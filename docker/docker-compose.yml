@@ -1,11 +1,10 @@
 services:
   ndc-php-micro:
     image: kiviev/php-fpm:dev8.4
-#    image: php:8.4-fpm
     container_name: php-fpm
     restart: always
     ports:
-      - '9003:9003'
+      - '9203:9003'
     extra_hosts:
       - "host.docker.internal:host-gateway"
     env_file:
@@ -15,9 +14,7 @@ services:
       - ./build/php/php.ini:/usr/local/etc/php/php.ini:ro
       - ./build/php/php-fpm.conf:/usr/local/etc/php-fpm.conf:ro
       - ./build/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
-#    command: ["docker-php-entrypoint"]
     command: ["php-fpm", "-F", "-R"]
-#    entrypoint: ["docker-php-entrypoint"]
     networks:
       service_network:
 
