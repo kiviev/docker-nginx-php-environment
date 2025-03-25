@@ -45,11 +45,11 @@ install_sf_api: ## install symphony skeleton and api
 	make install_sf
 	make composer_require api
 
-sf:
+sf: ## symphony console command example sf cache:clear -> php bin/console cache:clear
 	@docker run --rm --interactive --tty \
           --volume ./app/:/var/www/app/ \
           kiviev/php-fpm:dev8.4 bash -c "php bin/console $(filter-out $@,$(MAKECMDGOALS))"
 
-# Esto evita que Make intente interpretar los parámetros como objetivos
+# This prevents Make from trying to interpret parameters as targets.
 %:
 	@:
