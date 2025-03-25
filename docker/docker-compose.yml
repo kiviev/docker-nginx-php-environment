@@ -4,7 +4,7 @@ services:
     container_name: php-fpm
     restart: always
     ports:
-      - '9203:9003'
+      - '${XDEBUG_PORT}:9003'
     extra_hosts:
       - "host.docker.internal:host-gateway"
     env_file:
