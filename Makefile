@@ -24,13 +24,13 @@ help: ## Show this help message
 composer: ## composer exec example: make composer params='update'
 	@docker run --rm --interactive --tty \
       --volume ./app:/app \
-      composer $(params)
+      composer $(filter-out $@,$(MAKECMDGOALS))
 
 composer_update: ## composer update project
-	make composer params='update'
+	make composer update
 
-composer_require: ## example: make composer_require package='symfony/uid'
-	make composer params='require $(package)'
+composer_require: ## example: make composer_require symfony/uid
+	make composer require $(filter-out $@,$(MAKECMDGOALS))
 
 install_sf: ## install symphony skeleton
 	@docker run --rm --interactive --tty \
@@ -39,9 +39,17 @@ install_sf: ## install symphony skeleton
 
 install_sf_webapp: ## install symphony skeleton and webapp
 	make install_sf
-	make composer_require package='webapp'
+	make composer_require webapp
 
 install_sf_api: ## install symphony skeleton and api
 	make install_sf
-	make composer_require package='api'
+	make composer_require api
 
+sf:
+	@docker run --rm --interactive --tty \
+          --volume ./app/:/var/www/app/ \
+          kiviev/php-fpm:dev8.4 bash -c "php bin/console $(filter-out $@,$(MAKECMDGOALS))"
+
+# Esto evita que Make intente interpretar los parámetros como objetivos
+%:
+	@:
