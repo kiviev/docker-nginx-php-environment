@@ -53,6 +53,3 @@ build_and_push_dev: ## Build And Push php dev image
 build_nginx: ## Build nginx image
 	@docker build -t $(REGISTY)/nginx:$(NGINX_VERSION) --build-arg VERSION=$(NGINX_VERSION) --build-arg TARGET=web --build-arg UID=$(UID) --no-cache ./build/nginx
 
-
-test:
-	echo ${UID}
